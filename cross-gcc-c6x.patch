@@ -1,0 +1,51 @@
+Index: gcc/config/c6x/c6x.c
+===================================================================
+RCS file: /cvs/cvsfiles/devo/gcc/config/c6x/c6x.c,v
+retrieving revision 1.16
+diff -u -3 -p -r1.16 c6x.c
+--- gcc/config/c6x/c6x.c        26 Jan 2014 17:41:28 -0000      1.16
++++ gcc/config/c6x/c6x.c        20 Jun 2014 13:07:59 -0000
+@@ -5894,6 +5894,9 @@ static struct hw_doloop_hooks c6x_doloop
+ static void
+ c6x_hwloops (void)
+ {
++  /* start-sanitize-redhat */
++  if (0) /* CFG called too late.  */
++    /* end-sanitize-redhat */
+   if (optimize)
+     reorg_loops (true, &c6x_doloop_hooks);
+ }
+Index: gcc/config/c6x/c6x.md
+===================================================================
+RCS file: /cvs/cvsfiles/devo/gcc/config/c6x/c6x.md,v
+retrieving revision 1.10
+diff -u -3 -p -r1.10 c6x.md
+--- gcc/config/c6x/c6x.md	26 Jan 2014 17:41:28 -0000	1.10
++++ gcc/config/c6x/c6x.md	4 Jul 2014 10:37:34 -0000
+@@ -1432,7 +1432,7 @@
+ 		   (plus:SI (match_dup 0)
+ 			    (const_int -1)))
+ 	      (clobber (match_dup 2))])] ; match_scratch
+-  "TARGET_INSNS_64PLUS && optimize"
++  "TARGET_INSNS_64PLUS && optimize && 0"
+ {
+   /* The loop optimizer doesn't check the predicates... */
+   if (GET_MODE (operands[0]) != SImode)
+@@ -1485,7 +1485,7 @@
+ 	(plus:SI (match_dup 3)
+ 		 (const_int -1)))
+    (clobber (match_scratch:SI 2 "=X,&AB,&AB,&AB"))]
+-  "TARGET_INSNS_64PLUS && optimize"
++  "TARGET_INSNS_64PLUS && optimize && 0"
+   "#"
+   [(set_attr "type" "spkernel")])
+ 
+@@ -1499,7 +1499,7 @@
+ 	(plus:SI (match_dup 3)
+ 		 (const_int -1)))
+    (clobber (match_scratch 2))]
+-  ""
++  "0"
+   [(set (match_dup 2) (plus:SI (match_dup 3) (const_int -1)))
+    (set (match_dup 0) (match_dup 2))
+    (set (pc)
