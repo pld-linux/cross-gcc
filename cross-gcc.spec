@@ -146,6 +146,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 # receiving non constant format strings
 %define		Werror_cflags	%{nil}
 
+# -march= from host is invalid when configuring targets
+%define		filterout_c		-march=.*
+%define		filterout_cxx	-march=.*
+
 %description
 Cross-build GNU C compiler collection.
 
