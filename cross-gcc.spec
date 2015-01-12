@@ -142,6 +142,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define builddir %{_builddir}/%{name}-%{version}
 
+# functions with printf format attribute but with special parser and also
+# receiving non constant format strings
+%define		Werror_cflags	%{nil}
+
 %description
 Cross-build GNU C compiler collection.
 
