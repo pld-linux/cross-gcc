@@ -428,7 +428,6 @@ ln -sf libcloog-isl.so.4 libcloog.so
 #
 # Configure the compiler
 #
-cd %{builddir}
 config_target() {
 	echo "=== CONFIGURING $1"
 
@@ -509,8 +508,8 @@ config_target() {
 	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags}" \
 	CXXFLAGS="%{rpmcxxflags}" \
-	LDFLAGS="-Wl,-z,relro " \
-	../%{srcdir}/configure \
+	LDFLAGS="-Wl,-z,relro" \
+	../configure \
 	--bindir=%{_bindir} \
 	--build=%{_target_platform} \
 	--datadir=%{_datadir} \
@@ -568,6 +567,7 @@ config_target() {
 	cd ..
 }
 
+cd %{builddir}/%{srcdir}
 for target in $(cat target.list); do
 	config_target $target
 done
@@ -631,6 +631,7 @@ install_bin() {
 	esac
 }
 
+cd %{builddir}/%{srcdir}
 for target in $(cat target.list); do
 	install -d $RPM_BUILD_ROOT%{_prefix}/$target/sys-root
 	install_bin $target
@@ -664,6 +665,7 @@ while read x; do
 	mv $x $y/cross-gcc.mo
 done
 
+cd %{builddir}
 %find_lang cross-gcc
 
 rm $RPM_BUILD_ROOT%{_mandir}/man7/*.7
@@ -718,9 +720,9 @@ install_lang() {
 	echo "%{_mandir}/man1/$arch*-gcc*"
 	echo "%{_mandir}/man1/$arch*-gcov*"
 	case $cpu in
-		ppc*|ppc64*)
+	ppc*|ppc64*)
 		;;
-		*)
+	*)
 		echo "/usr/lib/gcc/$target_cpu-*/"
 		echo "%{_libexecdir}/gcc/$target_cpu*/*/cc1"
 		echo "%{_libexecdir}/gcc/$target_cpu*/*/collect2"
@@ -736,15 +738,16 @@ install_lang() {
 	echo "%{_bindir}/$arch*-g++"
 	echo "%{_mandir}/man1/$arch*-g++*"
 	case $cpu in
-		ppc*|ppc64*)
+	ppc*|ppc64*)
 		;;
-		*)
+	*)
 		echo "%{_libexecdir}/gcc/$target_cpu*/*/cc1plus"
 	esac
 	) > files-c++.$arch
 }
 
-for target in $(cat target.list symlink-target.list); do
+cd %{builddir}
+for target in $(cat  %{srcdir}/target.list %{srcdir}/symlink-target.list); do
 	install_lang $target
 done
 
