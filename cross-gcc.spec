@@ -156,9 +156,7 @@ Cross-build GNU C compiler collection.
 %package common
 Summary:	Cross-build GNU C compiler documentation and translation files
 Group:		Development/Languages
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description common
 Documentation, manual pages and translation files for cross-build GNU
