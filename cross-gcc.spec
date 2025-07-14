@@ -266,37 +266,37 @@ the number of packages. \
 %prep
 %setup -qc -a 1 -a 2
 cd %{srcdir}
-%patch0 -p0
-%patch1 -p0
-%patch2 -p0
-%patch3 -p0
-%patch4 -p0
-%patch5 -p0
-%patch6 -p0
-%patch7 -p0
+%patch -P0 -p0
+%patch -P1 -p0
+%patch -P2 -p0
+%patch -P3 -p0
+%patch -P4 -p0
+%patch -P5 -p0
+%patch -P6 -p0
+%patch -P7 -p0
 %if %{with cloog}
-%patch8 -p0
-%patch9 -p0
+%patch -P8 -p0
+%patch -P9 -p0
 %endif
-%patch10 -p0
+%patch -P10 -p0
 # % if %{with libstdcxx_docs}
 # % patch11 -p0
 # % endif
-%patch12 -p0
-%patch13 -p0
-%patch14 -p0
+%patch -P12 -p0
+%patch -P13 -p0
+%patch -P14 -p0
 rm -f libgo/go/crypto/elliptic/p224{,_test}.go
-%patch15 -p0
-%patch16 -p0
-%patch17 -p0
+%patch -P15 -p0
+%patch -P16 -p0
+%patch -P17 -p0
 
-%patch900 -p0
-%patch901 -p1
-%patch903 -p0
-%patch904 -p0
+%patch -P900 -p0
+%patch -P901 -p1
+%patch -P903 -p0
+%patch -P904 -p0
 
 cd ..
-%patch1100 -p0
+%patch -P1100 -p0
 cd %{srcdir}
 
 # Move the version number back
